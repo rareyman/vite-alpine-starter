@@ -29,6 +29,7 @@ coverage/
 Thumbs.db
 .idea/
 *.swp
+._*
 
 # ESLint cache (if enabled)
 .eslintcache
@@ -37,3 +38,13 @@ Thumbs.db
 .vscode/*
 !.vscode/extensions.json
 !.vscode/settings.json
+
+# Generated build info (redundant safety)
+dist/version.txt
+# or if you ever generate it at the site root:
+# /version.txt
+
+# Your convention: root-only scratch
+/_*
+
+
