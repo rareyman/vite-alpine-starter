@@ -24,6 +24,13 @@ npm run dev
 ```
 All Vite commands are routed through `scripts/vite-runner.js`, which respects `build-config.cjs` (`publicUrl`, output dirs, and dev/preview ports) so you can point the site at a Bluehost subfolder without changing Vite CLI args manually.
 
+## Quick workflow
+- `npm install` (preinstall guard) + `fnm install && fnm use`: install deps and confirm `node -v` matches `.node-version`.
+- `npm run clean` if you need to wipe previous builds before starting work.
+- `npm run dev` for daily development, `npm run preview` to QA a prod-like bundle.
+- `npm run build` to produce `dist/` with `version.txt`, `npm run smoke-test` to confirm all HTML routes landed in `dist/`, and `npm run release` for the publish-ready build + commit log.
+- `npm run lint`/`npm run format` (or `npm run check`) to keep code and styles tidy.
+
 ## Linting & Formatting
 ```bash
 npm run check
