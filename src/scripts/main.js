@@ -1,5 +1,7 @@
 import '../styles/main.css'
 import Alpine from 'alpinejs'
+import AOS from 'aos'
+import 'aos/dist/aos.css'
 
 // Optional: import any Alpine plugins here
 // import persist from '@alpinejs/persist'
@@ -96,6 +98,15 @@ const initMobileNav = () => {
 	}
 }
 
+const initAos = () => {
+	AOS.init({
+		once: true,
+		duration: 700,
+		easing: 'ease-out-cubic',
+		offset: 120,
+	})
+}
+
 document.addEventListener('DOMContentLoaded', () => {
 	const toggleButton = document.getElementById('theme-toggle')
 	if (toggleButton) {
@@ -112,6 +123,7 @@ document.addEventListener('DOMContentLoaded', () => {
 		})
 	}
 	initMobileNav()
+	initAos()
 })
 
 window.Alpine = Alpine

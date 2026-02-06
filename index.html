@@ -41,13 +41,13 @@
 			}
 
 			#primary-nav {
-				border-bottom: 1px solid rgba(226, 232, 240, 0.65);
-				background: rgba(255, 255, 255, 0.92);
+				border-bottom: 1px solid transparent;
+				background: transparent;
 			}
 
 			.dark #primary-nav {
-				border-color: rgba(255, 255, 255, 0.1);
-				background: rgba(15, 23, 42, 0.9);
+				border-bottom: 1px solid transparent;
+				background: transparent;
 			}
 
 			#primary-nav a {
@@ -116,7 +116,7 @@
 	<body
 		class="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-50">
 		<div class="gradient-shell min-h-screen pb-16">
-			<div class="sticky top-0 z-50 w-full bg-white/80 py-4 backdrop-blur dark:bg-slate-950/80">
+			<div class="sticky top-0 z-50 w-full bg-transparent py-4 backdrop-blur dark:bg-transparent">
 				<div class="mx-auto flex max-w-6xl items-center justify-between gap-8 px-6">
 					<div
 						class="flex flex-col text-sm font-semibold uppercase tracking-[0.4em] text-indigo-300">
@@ -265,7 +265,7 @@
 					</div>
 				</header>
 
-				<section id="build" class="grid gap-6 md:grid-cols-3">
+				<section id="build" class="grid gap-6 md:grid-cols-3" data-aos="fade-up">
 					<article
 						class="rounded-2xl border border-slate-200/70 bg-white/90 p-6 shadow-sm shadow-slate-200/60 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:shadow-none">
 						<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-300">
@@ -302,7 +302,8 @@
 
 				<section
 					id="story"
-					class="space-y-6 rounded-3xl border border-slate-200/70 bg-white/90 p-8 shadow-lg shadow-slate-300/40 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-indigo-900/30">
+					class="space-y-6 rounded-3xl border border-slate-200/70 bg-white/90 p-8 shadow-lg shadow-slate-300/40 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-indigo-900/30"
+					data-aos="fade-up">
 					<div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
 						<div>
 							<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-300">
@@ -344,7 +345,7 @@
 					</div>
 				</section>
 
-				<section id="timeline" class="space-y-6">
+				<section id="timeline" class="space-y-6" data-aos="fade-up">
 					<div
 						class="flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg shadow-slate-200/40 backdrop-blur dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-100 dark:shadow-indigo-900/20">
 						<div>
@@ -385,7 +386,8 @@
 
 				<section
 					id="cta"
-					class="rounded-3xl border border-slate-200/70 bg-gradient-to-r from-slate-100 to-white/80 p-8 text-center text-slate-900 shadow-xl shadow-slate-300/40 dark:border-indigo-500/30 dark:bg-gradient-to-r dark:from-indigo-500/20 dark:to-sky-500/10 dark:text-slate-100">
+					class="rounded-3xl border border-slate-200/70 bg-gradient-to-r from-slate-100 to-white/80 p-8 text-center text-slate-900 shadow-xl shadow-slate-300/40 dark:border-indigo-500/30 dark:bg-gradient-to-r dark:from-indigo-500/20 dark:to-sky-500/10 dark:text-slate-100"
+					data-aos="fade-up">
 					<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-200">
 						Call to action
 					</p>
@@ -408,6 +410,7 @@
 					</div>
 				</section>
 			</main>
+			<footer class="mt-20 bg-transparent py-64" aria-hidden="true"></footer>
 		</div>
 	</body>
 </html>
