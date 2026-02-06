@@ -4,12 +4,14 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "preinstall": "node scripts/ensure-node-version.js",
     "clean": "rimraf dist dist-dev .vite",
     "dev": "node scripts/vite-runner.js dev",
     "build": "node scripts/vite-runner.js build && node scripts/generate-version.js",
     "release": "npm run build && node scripts/audit-commits.js",
     "lint": "eslint src/**/*.js && stylelint src/**/*.css",
     "check": "npm run lint && npm run format",
+    "smoke-test": "node scripts/smoke-test.js",
     "preview": "node scripts/vite-runner.js preview",
     "format": "prettier --write 'src/**/*.{js,css,html}'"
   },

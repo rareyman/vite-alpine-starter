@@ -14,6 +14,8 @@ fnm use
 ```
 Keeps your local shell on the Node version recorded in `.node-version` before you run the toolchain.
 
+`npm install` now runs a `preinstall` hook that confirms the currently active `node -v` matches `.node-version`, so follow the `fnm install && fnm use` steps whenever that prompt appears.
+
 ## Development flow
 ```bash
 npm run dev
@@ -34,6 +36,9 @@ npm run clean
 npm run release
 ```
 `npm run release` runs the build runner, emits `dist/` (or whatever `build-config.cjs.outDir` specifies), writes `dist/version.txt`, and generates `dist/commit-log-<timestamp>.txt` with the last ten commits (stored with the build but not committed). This mirrors the Parcel release pipeline you used before.
+
+## Smoke test
+`npm run smoke-test` runs `scripts/vite-runner.js build` and then checks that every HTML file under `src/pages/` (plus the root `index.html`) exists in `dist/`, so you can quickly verify the generated URLs before deploying.
 
 ## Deployment notes (Bluehost or similar)
 1. Set `build-config.cjs.publicUrl` to the folder where the host serves the site (e.g., `/client-site/`).
