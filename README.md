@@ -18,6 +18,9 @@ Keeps your local shell on the Node version recorded in `.node-version` before yo
 
 The version guard reads `.node-version`, warns if it is missing, and otherwise fails the install when `process.version` diverges so everyone keeps the same toolchain.
 
+## Theme persistence
+The microsite stores the user’s current theme (key `microsite-theme`) in `localStorage`. `src/scripts/main.js` reads that value on load and defaults to `light` when nothing is present, then writes the updated theme whenever the toggle runs. As of now you can also flip the `THEME_LOCK` constant inside `src/scripts/main.js` to force the site into `light` or `dark` regardless of user/browser preference; in that case the toggle is disabled. Any other page (for example under `src/pages/`) can mirror the theme by reading the same key before rendering and applying `document.documentElement.classList.toggle('dark', stored === 'dark')` (or simply respecting the locked value when it’s enabled).
+
 ## Development flow
 ```bash
 npm run dev

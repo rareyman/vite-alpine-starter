@@ -32,6 +32,84 @@
 					radial-gradient(circle at 80% 20%, rgba(248, 250, 252, 0.25), transparent 35%),
 					linear-gradient(135deg, #0f172a, #020617 55%, #0b1120);
 			}
+			:root {
+				--sticky-offset: 4rem;
+			}
+
+			main section[id] {
+				scroll-margin-top: calc(var(--sticky-offset) + 1rem);
+			}
+
+			#primary-nav {
+				border-bottom: 1px solid rgba(226, 232, 240, 0.65);
+				background: rgba(255, 255, 255, 0.92);
+			}
+
+			.dark #primary-nav {
+				border-color: rgba(255, 255, 255, 0.1);
+				background: rgba(15, 23, 42, 0.9);
+			}
+
+			#primary-nav a {
+				transition: color 0.2s ease;
+			}
+
+			#primary-nav {
+				flex: 1;
+				gap: 2rem;
+				justify-content: center;
+			}
+
+			#primary-nav-mobile a,
+			#primary-nav a {
+				white-space: nowrap;
+			}
+
+			#primary-nav-mobile {
+				position: fixed;
+				inset-inline: 0;
+				top: calc(var(--sticky-offset));
+				bottom: 0;
+				backdrop-filter: blur(18px);
+				z-index: 40;
+			}
+
+			#primary-nav-mobile .menu-sheet {
+				min-height: calc(100vh - var(--sticky-offset));
+			}
+
+			#theme-toggle .moon-icon {
+				display: none;
+			}
+
+			#theme-toggle[data-theme='dark'] .sun-icon {
+				display: none;
+			}
+
+			#theme-toggle[data-theme='dark'] .moon-icon {
+				display: inline;
+			}
+
+			#theme-toggle .sun-icon,
+			#theme-toggle .moon-icon {
+				width: 1.25rem;
+				height: 1.25rem;
+			}
+
+			.dark .shadow,
+			.dark .shadow-sm,
+			.dark .shadow-lg,
+			.dark .shadow-xl,
+			.dark .shadow-2xl {
+				box-shadow: none !important;
+			}
+
+			@media (min-width: 768px) {
+				#primary-nav {
+					border-bottom: none;
+					background: transparent;
+				}
+			}
 		</style>
 		<title>TWv3 Starter</title>
 	</head>
@@ -43,12 +121,13 @@
 					<div
 						class="flex flex-col text-sm font-semibold uppercase tracking-[0.4em] text-indigo-300">
 						<span>TWv3</span>
-						<span class="text-xs font-normal tracking-[0.2em] text-slate-500 dark:text-slate-400"
-							>MICROSITE</span
-						>
+						<span class="text-xs font-normal tracking-[0.2em] text-slate-500 dark:text-slate-400">
+							MICROSITE
+						</span>
 					</div>
 					<nav
-						class="flex flex-wrap items-center gap-3 text-xs uppercase tracking-[0.3em] text-slate-600 dark:text-slate-300">
+						id="primary-nav"
+						class="hidden flex-1 justify-center gap-3 text-xs uppercase tracking-[0.3em] text-slate-600 md:flex dark:text-slate-300">
 						<a class="transition hover:text-slate-900 dark:hover:text-white" href="#build"
 							>Structure</a
 						>
@@ -58,16 +137,111 @@
 						>
 						<a class="transition hover:text-slate-900 dark:hover:text-white" href="#cta">CTA</a>
 					</nav>
-					<button
-						id="theme-toggle"
-						type="button"
-						data-light-label="Switch to dark theme"
-						data-dark-label="Switch to light theme"
-						class="inline-flex rounded-full border border-slate-300 bg-white px-4 py-2 text-xs font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:border-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-white/60 dark:bg-slate-900 dark:text-white dark:hover:border-indigo-300">
-						Switch to dark theme
-					</button>
+					<div class="flex items-center gap-3">
+						<button
+							id="nav-toggle"
+							type="button"
+							aria-controls="primary-nav-mobile"
+							aria-expanded="false"
+							class="inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-white px-3 py-2 text-slate-700 shadow-sm transition hover:border-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 md:hidden dark:border-slate-700 dark:bg-slate-900 dark:text-slate-200">
+							<span class="sr-only">Toggle navigation</span>
+							<svg
+								class="h-5 w-5"
+								viewBox="0 0 24 24"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round">
+								<path d="M4 7h16M4 12h16M4 17h16"></path>
+							</svg>
+						</button>
+						<button
+							id="theme-toggle"
+							type="button"
+							data-light-label="Switch to dark theme"
+							data-dark-label="Switch to light theme"
+							data-theme="light"
+							class="inline-flex items-center justify-center rounded-full border border-slate-300 bg-white p-2 text-slate-900 transition hover:border-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-white/60 dark:bg-slate-900 dark:text-white dark:hover:border-indigo-300">
+							<span class="sr-only">Toggle theme</span>
+							<svg
+								viewBox="0 0 24 24"
+								class="sun-icon"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round">
+								<circle cx="12" cy="12" r="5"></circle>
+								<path
+									d="M12 1v2M12 21v2M4.22 4.22l1.42 1.42M18.36 18.36l1.42 1.42M1 12h2M21 12h2M4.22 19.78l1.42-1.42M18.36 5.64l1.42-1.42"></path>
+							</svg>
+							<svg
+								viewBox="0 0 24 24"
+								class="moon-icon"
+								fill="none"
+								stroke="currentColor"
+								stroke-width="2"
+								stroke-linecap="round"
+								stroke-linejoin="round">
+								<path d="M21 12.79A9 9 0 1111.21 3 7 7 0 0021 12.79z"></path>
+							</svg>
+						</button>
+					</div>
 				</div>
 			</div>
+			<nav
+				id="primary-nav-mobile"
+				class="hidden flex-col items-stretch overflow-hidden"
+				aria-label="Mobile primary"
+				role="dialog"
+				aria-modal="true">
+				<span
+					class="pointer-events-none absolute inset-0 bg-slate-900/65 backdrop-blur dark:bg-slate-950/70"></span>
+				<button
+					data-action="close-mobile-nav"
+					type="button"
+					class="absolute right-6 top-6 z-20 inline-flex items-center justify-center rounded-full border border-slate-200/70 bg-white/80 p-2 text-slate-900 shadow-lg transition hover:ring-2 hover:ring-indigo-400 dark:border-slate-600 dark:bg-slate-900/80 dark:text-slate-50"
+					aria-label="Close navigation">
+					<svg
+						class="h-5 w-5"
+						viewBox="0 0 24 24"
+						fill="none"
+						stroke="currentColor"
+						stroke-width="2"
+						stroke-linecap="round"
+						stroke-linejoin="round">
+						<path d="M6 6l12 12M6 18L18 6"></path>
+					</svg>
+				</button>
+				<div
+					class="menu-sheet relative z-10 flex h-full min-h-[calc(100vh-var(--sticky-offset))] w-full flex-col items-center justify-start gap-10 bg-white/95 px-6 pt-16 text-center text-4xl font-semibold uppercase tracking-[0.35em] text-slate-900 shadow-2xl backdrop-blur dark:bg-slate-900/95 dark:text-slate-50">
+					<a
+						class="block transition hover:text-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300"
+						href="#build"
+						data-mobile-link
+						>Structure</a
+					>
+					<a
+						class="block transition hover:text-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300"
+						href="#story"
+						data-mobile-link
+						>Story</a
+					>
+					<a
+						class="block transition hover:text-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300"
+						href="#timeline"
+						data-mobile-link
+						>Timeline</a
+					>
+					<a
+						class="block transition hover:text-indigo-500 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-300"
+						href="#cta"
+						data-mobile-link
+						>CTA</a
+					>
+				</div>
+			</nav>
 			<main class="mx-auto max-w-6xl space-y-16 px-6 py-12">
 				<header class="space-y-4 text-center">
 					<h1 class="text-4xl font-semibold leading-tight sm:text-5xl">

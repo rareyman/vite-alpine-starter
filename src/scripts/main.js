@@ -5,7 +5,11 @@ import Alpine from 'alpinejs'
 // import persist from '@alpinejs/persist'
 // Alpine.plugin(persist)
 
-const THEME_STORAGE_KEY = 'twv3-theme'
+const THEME_STORAGE_KEY = 'microsite-theme'
+const THEME_LOCK = {
+	enabled: false,
+	value: 'light',
+}
 
 const updateToggleLabel = (theme) => {
 	const toggleButton = document.getElementById('theme-toggle')
@@ -14,8 +18,10 @@ const updateToggleLabel = (theme) => {
 	}
 	const label = theme === 'dark' ? toggleButton.dataset.darkLabel : toggleButton.dataset.lightLabel
 	if (label) {
-		toggleButton.textContent = label
+		toggleButton.setAttribute('aria-label', label)
+		toggleButton.setAttribute('title', label)
 	}
+	toggleButton.dataset.theme = theme
 	toggleButton.setAttribute('aria-pressed', theme === 'dark')
 }
 
@@ -25,21 +31,87 @@ const setTheme = (theme) => {
 	updateToggleLabel(theme)
 }
 
-const getPreferredTheme = () =>
-	localStorage.getItem(THEME_STORAGE_KEY) === 'dark' ? 'dark' : 'light'
+const getPreferredTheme = () => {
+	if (THEME_LOCK.enabled) {
+		return THEME_LOCK.value
+	}
+	const stored = localStorage.getItem(THEME_STORAGE_KEY)
+	if (stored === 'dark' || stored === 'light') {
+		return stored
+	}
+	return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
+}
 
 setTheme(getPreferredTheme())
+
+const initMobileNav = () => {
+	const toggle = document.getElementById('nav-toggle')
+	const nav = document.getElementById('primary-nav-mobile')
+	if (!toggle || !nav) {
+		return
+	}
+	let isMenuOpen = false
+	const mediaQuery = window.matchMedia('(min-width: 768px)')
+	const closeButton = nav.querySelector('[data-action="close-mobile-nav"]')
+	const mobileLinks = nav.querySelectorAll('[data-mobile-link]')
+	const closeMenu = () => {
+		if (!isMenuOpen) {
+			return
+		}
+		isMenuOpen = false
+		syncNav()
+	}
+	const syncNav = () => {
+		const isDesktop = mediaQuery.matches
+		if (isDesktop) {
+			nav.classList.add('hidden')
+			toggle.setAttribute('aria-expanded', 'true')
+		} else {
+			nav.classList.toggle('hidden', !isMenuOpen)
+			toggle.setAttribute('aria-expanded', String(isMenuOpen))
+		}
+	}
+	syncNav()
+	const toggleMenu = () => {
+		isMenuOpen = !isMenuOpen
+		syncNav()
+	}
+	toggle.addEventListener('click', toggleMenu)
+	if (closeButton) {
+		closeButton.addEventListener('click', closeMenu)
+	}
+	mobileLinks.forEach((link) => {
+		link.addEventListener('click', closeMenu)
+	})
+	const handleMediaChange = () => {
+		if (!mediaQuery.matches) {
+			isMenuOpen = false
+		}
+		syncNav()
+	}
+	if (mediaQuery.addEventListener) {
+		mediaQuery.addEventListener('change', handleMediaChange)
+	} else if (mediaQuery.addListener) {
+		mediaQuery.addListener(handleMediaChange)
+	}
+}
 
 document.addEventListener('DOMContentLoaded', () => {
 	const toggleButton = document.getElementById('theme-toggle')
 	if (toggleButton) {
 		updateToggleLabel(getPreferredTheme())
+		if (THEME_LOCK.enabled) {
+			toggleButton.setAttribute('aria-disabled', 'true')
+			toggleButton.classList.add('opacity-50', 'pointer-events-none')
+			return
+		}
 		toggleButton.addEventListener('click', () => {
 			const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'
 			setTheme(nextTheme)
 			localStorage.setItem(THEME_STORAGE_KEY, nextTheme)
 		})
 	}
+	initMobileNav()
 })
 
 window.Alpine = Alpine
