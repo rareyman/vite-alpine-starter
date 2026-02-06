@@ -2,10 +2,14 @@ import fs from 'fs'
 import path from 'path'
 import { execSync } from 'child_process'
 import { fileURLToPath } from 'url'
+import { createRequire } from 'module'
 
 // Setup paths for ES modules
 const __filename = fileURLToPath(import.meta.url)
 const __dirname = path.dirname(__filename)
+const require = createRequire(import.meta.url)
+const configPath = path.resolve(__dirname, '../build-config.cjs')
+const buildConfig = fs.existsSync(configPath) ? require(configPath) : { outDir: 'dist' }
 
 try {
 	// 1. Get Git Info
@@ -51,7 +55,7 @@ If Branch + Commit match, you're looking at the same source state.
 
 	// 3. Write to dist/version.txt
 	// The dist folder is one level up from scripts/, so '../dist'
-	const distDir = path.resolve(__dirname, '../dist')
+	const distDir = path.resolve(__dirname, '..', buildConfig.outDir || 'dist')
 
 	// Ensure dist exists (it should, after vite build)
 	if (!fs.existsSync(distDir)) {
