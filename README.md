@@ -63,6 +63,9 @@ Any change to these values automatically flows through `scripts/vite-runner.js`,
 ## Additional documentation
 See [docs/ops-workflow.md](docs/ops-workflow.md) for a walkthrough of the metadata scripts, the Vite runner, and how to fold that explanation into future README updates.
 
+## Secondary HTML entrypoints
+Drop any future standalone templates (typography testbed, 404, maintenance, landing variations) under `src/pages/` so the root only holds the canonical `index.html`. Vite already includes that directory via `rollupOptions.input`, so each file remains reachable at `/your-page-name.html` while sitting in a clearer `src/pages/` folder.
+
 ## Notes
 - `dist/` is generated output; don’t check it into Git.
 - Some configuration files stay `.cjs` because tools like ESLint and Stylelint expect CommonJS configs even though the project declares `"type": "module"`.

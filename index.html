@@ -1,76 +1,218 @@
 <!doctype html>
-<html>
+<html lang="en">
 	<head>
 		<meta charset="UTF-8" />
 		<meta name="viewport" content="width=device-width, initial-scale=1.0" />
-		<!-- load css / tailwindcss -->
-		<link href="/src/styles/main.css" rel="stylesheet" />
-
-		<!--
-      load logic / alpinejs
-      https://alpinejs.dev/essentials/installation
-    -->
 		<script type="module" src="/src/scripts/main.js"></script>
+		<style>
+			@keyframes bandedGlow {
+				0% {
+					background-position: 0 0;
+				}
+				100% {
+					background-position: 100% 100%;
+				}
+			}
 
+			.gradient-shell {
+				background:
+					radial-gradient(circle at top, rgba(15, 23, 42, 0.06), transparent 45%),
+					radial-gradient(circle at 80% 20%, rgba(148, 163, 184, 0.25), transparent 35%),
+					linear-gradient(135deg, #f8fafc, #e2e8f0 55%, #cbd5f5);
+				animation: bandedGlow 28s ease infinite;
+				background-size:
+					200% 200%,
+					200% 200%,
+					100% 100%;
+			}
+
+			.dark .gradient-shell {
+				background:
+					radial-gradient(circle at top, rgba(129, 140, 248, 0.4), transparent 45%),
+					radial-gradient(circle at 80% 20%, rgba(248, 250, 252, 0.25), transparent 35%),
+					linear-gradient(135deg, #0f172a, #020617 55%, #0b1120);
+			}
+		</style>
+		<title>TWv3 Starter</title>
 	</head>
+	<body
+		class="min-h-screen bg-slate-50 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-50">
+		<div class="gradient-shell min-h-screen pb-16">
+			<main class="mx-auto max-w-6xl space-y-16 px-6 py-12">
+				<header class="space-y-4 text-center">
+					<p class="text-sm tracking-[0.4em] text-indigo-300">TWv3 MICROSITE</p>
+					<h1 class="text-4xl font-semibold leading-tight sm:text-5xl">
+						Modular, thoughtful building blocks for brochure-style pages.
+					</h1>
+					<p class="mx-auto max-w-3xl text-base text-slate-600 dark:text-slate-300">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Quisque sagittis sagittis
+						purus, sed ullamcorper dolor fermentum vitae.
+					</p>
+					<div class="flex flex-wrap justify-center gap-3">
+						<a
+							class="rounded-full border border-transparent bg-indigo-500 px-6 py-3 text-sm font-semibold uppercase tracking-wider text-white transition hover:bg-indigo-400"
+							href="#build"
+							>Start a build</a
+						>
+						<a
+							class="rounded-full border border-slate-200 bg-white/90 px-6 py-3 text-sm font-semibold uppercase tracking-wider text-slate-900 transition hover:border-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-white/40 dark:bg-slate-900/70 dark:text-white dark:hover:border-indigo-300"
+							href="/typography-testbed.html"
+							>Open typography testbed</a
+						>
+					</div>
+					<div class="flex justify-center">
+						<button
+							id="theme-toggle"
+							type="button"
+							data-light-label="Switch to dark theme"
+							data-dark-label="Switch to light theme"
+							class="mt-4 rounded-full border border-slate-300 bg-white px-6 py-3 text-xs font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:border-slate-400 focus-visible:outline focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-indigo-500 dark:border-white/60 dark:bg-slate-900 dark:text-white dark:hover:border-indigo-300">
+							Switch to dark theme
+						</button>
+					</div>
+				</header>
 
-	<body class="bg-gray-300">
-		<!-- <div class="flex h-screen w-screen items-center justify-center bg-gray-100">
-			<div class="-mt-8 mb-5 rounded border border-gray-300 p-10 px-8 py-4 shadow-xl">
-				<h1>Hello world!</h1>
-			</div>
-		</div> -->
+				<section id="build" class="grid gap-6 md:grid-cols-3">
+					<article
+						class="rounded-2xl border border-slate-200/70 bg-white/90 p-6 shadow-sm shadow-slate-200/60 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:shadow-none">
+						<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-300">
+							Structure
+						</p>
+						<h2 class="mt-3 text-xl font-semibold text-slate-900 dark:text-white">
+							Clean skeleton
+						</h2>
+						<p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+							Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer nec odio. Praesent
+							libero.
+						</p>
+					</article>
+					<article
+						class="rounded-2xl border border-slate-200/70 bg-white/90 p-6 shadow-sm shadow-slate-200/60 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:shadow-none">
+						<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-300">Flow</p>
+						<h2 class="mt-3 text-xl font-semibold text-slate-900 dark:text-white">
+							Hero, features, CTA
+						</h2>
+						<p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+							Fusce nec tellus sed augue semper porta. Mauris massa. Vestibulum lacinia arcu eget
+							nulla.
+						</p>
+					</article>
+					<article
+						class="rounded-2xl border border-slate-200/70 bg-white/90 p-6 shadow-sm shadow-slate-200/60 backdrop-blur dark:border-white/10 dark:bg-white/5 dark:text-slate-100 dark:shadow-none">
+						<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-300">Style</p>
+						<h2 class="mt-3 text-xl font-semibold text-slate-900 dark:text-white">TWv3 spacing</h2>
+						<p class="mt-3 text-sm text-slate-600 dark:text-slate-300">
+							Curabitur sodales ligula in libero. Sed dignissim lacinia nunc. Curabitur tortor.
+						</p>
+					</article>
+				</section>
 
-		<div class="mx-auto mt-8 w-2/3 rounded-lg border bg-gray-200 p-8">
-			<header>
-				<h1 class="text-2xl font-bold">Main Heading (h1)</h1>
-				<h2 class="mt-micro text-xl font-bold">Subheading (h2)</h2>
-			</header>
+				<section
+					class="space-y-6 rounded-3xl border border-slate-200/70 bg-white/90 p-8 shadow-lg shadow-slate-300/40 dark:border-white/10 dark:bg-slate-900/80 dark:shadow-indigo-900/30">
+					<div class="flex flex-col gap-3 lg:flex-row lg:items-center lg:justify-between">
+						<div>
+							<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-300">
+								Lorum ipsum
+							</p>
+							<h2 class="text-2xl font-semibold text-slate-900 dark:text-white">Momentary story</h2>
+							<p class="text-sm text-slate-600 dark:text-slate-300">
+								Lorem ipsum dolor sit amet, consectetur adipiscing elit. Cras ultricies ligula sed
+								magna dictum porta.
+							</p>
+						</div>
+						<div class="flex gap-3 text-sm text-slate-600 dark:text-slate-300">
+							<span class="rounded-full border border-slate-300/80 px-4 py-2 dark:border-white/30"
+								>01</span
+							>
+							<span class="rounded-full border border-slate-300/80 px-4 py-2 dark:border-white/30"
+								>02</span
+							>
+							<span class="rounded-full border border-slate-300/80 px-4 py-2 dark:border-white/30"
+								>03</span
+							>
+						</div>
+					</div>
+					<div class="grid gap-6 md:grid-cols-2">
+						<article>
+							<h3 class="text-lg font-semibold text-slate-900 dark:text-white">Local vignette</h3>
+							<p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+								Sed posuere consectetur est at lobortis. Aenean eu leo quam. Pellentesque ornare sem
+								lacinia quam venenatis vestibulum.
+							</p>
+						</article>
+						<article>
+							<h3 class="text-lg font-semibold text-slate-900 dark:text-white">Minimal copy</h3>
+							<p class="mt-2 text-sm text-slate-600 dark:text-slate-300">
+								Vivamus sagittis lacus vel augue laoreet rutrum faucibus dolor auctor. Donec
+								ullamcorper nulla non metus auctor fringilla.
+							</p>
+						</article>
+					</div>
+				</section>
 
-			<section class="">
-				<h3 class="mt-medium text-lg font-bold">Section Heading (h3)</h3>
-				<p class="mt-small -mx-4 rounded-lg bg-gray-300 px-4 py-2 text-lg">
-					This is a hero paragraph (p). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-				</p>
-				<p class="mt-small">
-					This is paragraph one (p). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-				</p>
-				<p class="mt-tiny">
-					This is paragraph two (p). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-				</p>
-				<p class="mt-tiny">
-					This is paragraph three (p). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
-					Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
-				</p>
-				<p class="mt-tiny">
-					<strong>Bold text</strong> and <em>italic text</em> within a paragraph.
-				</p>
-				<blockquote
-					class="mt-medium -ml-4 border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 drop-shadow-sm"
-				>
-					<p>This is a blockquote. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
-				</blockquote>
-				<ul class="mt-medium">
-					<li class="mt-tiny">Unordered list item 1</li>
-					<li class="mt-tiny">Unordered list item 2</li>
-					<li class="mt-tiny">Unordered list item 3</li>
-				</ul>
-				<ol class="mt-medium">
-					<li class="mt-tiny">Ordered list item 1</li>
-					<li class="mt-tiny">Ordered list item 2</li>
-					<li class="mt-tiny">Ordered list item 3</li>
-				</ol>
-				<pre class="mt-medium rounded-lg bg-gray-800 px-4 text-gray-400">
-<code>
-// This is a code block
-function helloWorld() {
-		console.log("Hello, world!");
-}</code>
-					</pre>
-			</section>
+				<section class="space-y-6">
+					<div
+						class="flex flex-wrap items-center justify-between gap-6 rounded-3xl border border-slate-200/70 bg-white/90 p-6 shadow-lg shadow-slate-200/40 backdrop-blur dark:border-white/10 dark:bg-slate-900/70 dark:text-slate-100 dark:shadow-indigo-900/20">
+						<div>
+							<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-300">
+								Timeline
+							</p>
+							<h2 class="text-2xl font-semibold text-slate-900 dark:text-white">
+								From concept to publish
+							</h2>
+						</div>
+						<div class="text-sm text-slate-600 dark:text-slate-300">
+							Every section is small, purposeful, and deploy-ready.
+						</div>
+					</div>
+					<div class="grid gap-4 md:grid-cols-4">
+						<div
+							class="flex flex-col gap-1 rounded-2xl border border-slate-200/60 bg-white/90 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-100">
+							<span class="text-indigo-300">Plan</span>
+							<p>Lorem ipsum dolor sit amet.</p>
+						</div>
+						<div
+							class="flex flex-col gap-1 rounded-2xl border border-slate-200/60 bg-white/90 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-100">
+							<span class="text-indigo-300">Craft</span>
+							<p>Curabitur non nulla sit amet nisl tempus convallis quis ac lectus.</p>
+						</div>
+						<div
+							class="flex flex-col gap-1 rounded-2xl border border-slate-200/60 bg-white/90 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-100">
+							<span class="text-indigo-300">Review</span>
+							<p>Sed porttitor lectus nibh. Vivamus magna justo.</p>
+						</div>
+						<div
+							class="flex flex-col gap-1 rounded-2xl border border-slate-200/60 bg-white/90 p-4 text-sm text-slate-600 dark:border-white/10 dark:bg-white/5 dark:text-slate-100">
+							<span class="text-indigo-300">Deploy</span>
+							<p>Praesent sapien massa, convallis a pellentesque nec.</p>
+						</div>
+					</div>
+				</section>
+
+				<section
+					class="rounded-3xl border border-slate-200/70 bg-gradient-to-r from-slate-100 to-white/80 p-8 text-center text-slate-900 shadow-xl shadow-slate-300/40 dark:border-indigo-500/30 dark:bg-gradient-to-r dark:from-indigo-500/20 dark:to-sky-500/10 dark:text-slate-100">
+					<p class="text-xs font-semibold uppercase tracking-[0.4em] text-indigo-200">
+						Call to action
+					</p>
+					<h2 class="mt-3 text-3xl font-semibold">Deploy a TWv3 pocket page</h2>
+					<p class="mx-auto mt-3 max-w-2xl text-sm text-slate-600 dark:text-slate-200">
+						Lorem ipsum dolor sit amet, consectetur adipiscing elit. Nulla quis lorem ut libero
+						malesuada feugiat.
+					</p>
+					<div class="mt-6 flex flex-wrap justify-center gap-3">
+						<a
+							class="rounded-full bg-white px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-slate-900 shadow-lg shadow-indigo-900/20 transition hover:bg-slate-200"
+							href="#"
+							>Download assets</a
+						>
+						<a
+							class="rounded-full border border-slate-400/60 px-6 py-3 text-sm font-semibold uppercase tracking-[0.3em] text-slate-900 transition hover:border-slate-500 dark:border-white/50 dark:text-white"
+							href="#"
+							>View style guide</a
+						>
+					</div>
+				</section>
+			</main>
 		</div>
 	</body>
 </html>
