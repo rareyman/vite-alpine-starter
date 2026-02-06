@@ -5,11 +5,12 @@ import { fileURLToPath } from 'node:url'
 import { createRequire } from 'node:module'
 
 const __dirname = dirname(fileURLToPath(import.meta.url))
-const require = createRequire(import.meta.url)
-const configPath = resolve(__dirname, '../build-config.cjs')
-const buildConfig = existsSync(configPath) ? require(configPath) : { outDir: 'dist' }
-const distDir = resolve(__dirname, '..', buildConfig.outDir || 'dist')
-const pagesDir = resolve(__dirname, '../src/pages')
+
+const loadBuildConfig = () => {
+	const configPath = resolve(__dirname, '../build-config.cjs')
+	const require = createRequire(import.meta.url)
+	return existsSync(configPath) ? require(configPath) : { outDir: 'dist' }
+}
 
 const normalizeRoute = (route) => route.replace(/\\/g, '/')
 
@@ -34,20 +35,7 @@ const collectHtmlPages = (baseDir, relative = '') => {
 	return entries
 }
 
-const expectedPages = ['index.html', ...collectHtmlPages(pagesDir)]
-
-const runnerScript = resolve(__dirname, 'vite-runner.js')
-const buildProcess = spawn(process.execPath, [runnerScript, 'build'], { stdio: 'inherit' })
-
-buildProcess.on('error', (error) => {
-	console.error('Smoke test build failed to start:', error.message)
-	process.exit(1)
-})
-
-buildProcess.on('close', (code) => {
-	if (code !== 0) {
-		process.exit(code)
-	}
+const verifyBuiltPages = (distDir, expectedPages) => {
 	const missing = expectedPages.filter((page) => !existsSync(resolve(distDir, page)))
 	if (missing.length) {
 		console.error('Smoke test failed; expected built pages missing:', missing.join(', '))
@@ -55,4 +43,28 @@ buildProcess.on('close', (code) => {
 	}
 	console.log('Smoke test passed; built pages are present.')
 	process.exit(0)
-})
+}
+
+const runSmokeTest = () => {
+	const buildConfig = loadBuildConfig()
+	const distDir = resolve(__dirname, '..', buildConfig.outDir || 'dist')
+	const pagesDir = resolve(__dirname, '../src/pages')
+	const expectedPages = ['index.html', ...collectHtmlPages(pagesDir)]
+
+	const runnerScript = resolve(__dirname, 'vite-runner.js')
+	const buildProcess = spawn(process.execPath, [runnerScript, 'build'], { stdio: 'inherit' })
+
+	buildProcess.on('error', (error) => {
+		console.error('Smoke test build failed to start:', error.message)
+		process.exit(1)
+	})
+
+	buildProcess.on('close', (code) => {
+		if (code !== 0) {
+			process.exit(code)
+		}
+		verifyBuiltPages(distDir, expectedPages)
+	})
+}
+
+runSmokeTest()

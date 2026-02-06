@@ -16,6 +16,8 @@ Keeps your local shell on the Node version recorded in `.node-version` before yo
 
 `npm install` now runs a `preinstall` hook that confirms the currently active `node -v` matches `.node-version`, so follow the `fnm install && fnm use` steps whenever that prompt appears.
 
+The version guard reads `.node-version`, warns if it is missing, and otherwise fails the install when `process.version` diverges so everyone keeps the same toolchain.
+
 ## Development flow
 ```bash
 npm run dev
@@ -39,6 +41,12 @@ npm run release
 
 ## Smoke test
 `npm run smoke-test` runs `scripts/vite-runner.js build` and then checks that every HTML file under `src/pages/` (plus the root `index.html`) exists in `dist/`, so you can quickly verify the generated URLs before deploying.
+
+The smoke test does three simple things in order:
+
+1. Collects every `.html` in `src/pages/` along with `index.html` so we know what should be published.
+2. Fires up `scripts/vite-runner.js build` to regenerate `dist/` using the shared configuration.
+3. Verifies that each expected page landed in `dist/` and fails the test (and build) if anything is missing, keeping you confident that the same routes available locally stay alive in the deployed output.
 
 ## Deployment notes (Bluehost or similar)
 1. Set `build-config.cjs.publicUrl` to the folder where the host serves the site (e.g., `/client-site/`).
