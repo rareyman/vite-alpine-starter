@@ -31,6 +31,7 @@ All Vite commands are routed through `scripts/vite-runner.js`, which respects `b
 - `npm install` (preinstall guard) + `fnm install && fnm use`: install deps and confirm `node -v` matches `.node-version`.
 - `npm run clean` if you need to wipe previous builds before starting work.
 - `npm run dev` for daily development, `npm run preview` to QA a prod-like bundle.
+  - When `npm run preview` starts, keep the terminal focused (Ctrl+C to stop) so it releases port 4173 when you’re finished; stray preview servers are the most common “port already in use” error.
 - `npm run build` to produce `dist/` with `version.txt`, `npm run smoke-test` to confirm all HTML routes landed in `dist/`, and `npm run release` for the publish-ready build + commit log.
 - `npm run lint`/`npm run format` (or `npm run check`) to keep code and styles tidy.
 
@@ -65,7 +66,11 @@ The smoke test does three simple things in order:
 4. Leave `version.txt` and `commit-log-*` in place on the server for traceability; they are intentionally lightweight helpers to confirm the deployed Git identity.
 
 ## Maintenance mode
-Drop an ignored runtime flag at `public/maintenance.json` when you want to gate the site. Copy the structure from [public/maintenance.example.json](public/maintenance.example.json) (just `maintenanceMode: true`) so the loader knows to show maintenance. While the flag is active the client-side boot loader replaces the body with the contents of `public/maintenance.html` (also ignored), letting you style the splash like any static page. Clearing the flag or deleting the template returns the regular experience.
+When the host needs a static splash, simply drop `maintenance.json` (copy [public/maintenance.example.json](public/maintenance.example.json)) and `maintenance.html` alongside the deployed `dist/` assets on the server. Vite only needs those files to exist at runtime; you do not have to rerun `npm run release` just to add them. The loader will fetch `/maintenance.json`, see `maintenanceMode: true`, and replace the SPA body with whatever `maintenance.html` contains.
+
+When the maintenance period ends, delete those two files from the server (or replace them with the real site assets) so the SPA can boot normally. A new `npm run release` is only necessary if you want to export fresh assets or metadata that account for other code/content changes.
+
+> After you delete the maintenance files but before you rebuild the `dist/` used for preview, running `npm run preview` may log `Maintenance flag not JSON text/html` because the SPA fallback rewrites `/maintenance.json` to `index.html`; that warning is harmless and vanishes once you rebuild without the ignored flag.
 
 ## Build configuration
 `build-config.cjs` centralizes the values used by the runner and metadata scripts:
