@@ -1,0 +1,93 @@
+<!-- Copy this file to public/maintenance.html when you need to gate the site. -->
+<style>
+	:root {
+		--maintenance-bg: #030712;
+		--maintenance-emphasis: #38bdf8;
+	}
+	body {
+		margin: 0;
+		min-height: 100vh;
+		font-family: 'Space Grotesk', 'Inter', 'Segoe UI', system-ui, sans-serif;
+		background:
+			radial-gradient(circle at top, rgba(236, 72, 153, 0.25), transparent 45%),
+			linear-gradient(135deg, var(--maintenance-bg), #0f172a 60%);
+		color: #e2e8f0;
+		display: flex;
+		align-items: center;
+		justify-content: center;
+		padding: 2rem;
+	}
+	.maintenance-shell {
+		width: 100%;
+		max-width: 900px;
+	}
+	.maintenance-card {
+		background: rgba(15, 23, 42, 0.75);
+		border-radius: 1.75rem;
+		padding: clamp(2rem, 4vw, 3.5rem);
+		box-shadow: 0 35px 80px rgba(2, 6, 23, 0.7);
+		backdrop-filter: blur(18px);
+	}
+	.maintenance-badge {
+		letter-spacing: 0.4em;
+		text-transform: uppercase;
+		font-size: 0.75rem;
+		color: rgba(248, 250, 252, 0.75);
+		margin-bottom: 1rem;
+	}
+	.maintenance-heading {
+		font-size: clamp(2.5rem, 5vw, 3.75rem);
+		margin-bottom: 1rem;
+	}
+	.maintenance-line {
+		margin-bottom: 1rem;
+		color: rgba(226, 232, 240, 0.9);
+		line-height: 1.6;
+	}
+	.maintenance-actions {
+		margin-top: 1.5rem;
+		display: flex;
+		justify-content: center;
+		gap: 1rem;
+		flex-wrap: wrap;
+	}
+	.maintenance-button,
+	.maintenance-link {
+		padding: 0.9rem 2rem;
+		border-radius: 999px;
+		font-weight: 600;
+		text-decoration: none;
+		transition: transform 0.2s ease;
+	}
+	.maintenance-button {
+		background: linear-gradient(135deg, #0ea5e9, #6366f1);
+		color: #030712;
+		box-shadow: 0 15px 35px rgba(99, 102, 241, 0.35);
+	}
+	.maintenance-button:hover {
+		transform: translateY(-2px);
+	}
+	.maintenance-link {
+		color: var(--maintenance-emphasis);
+		border-bottom: 1px solid rgba(56, 189, 248, 0.4);
+	}
+</style>
+<main class="maintenance-shell">
+	<div class="maintenance-card">
+		<p class="maintenance-badge">maintenance</p>
+		<h1 class="maintenance-heading">We're refreshing the backend</h1>
+		<p class="maintenance-line">
+			Thanks for waiting while we tweak some core services. This page will flip back to the live
+			site as soon as the flag is cleared.
+		</p>
+		<p class="maintenance-line">
+			We appreciate your patience. If you need immediate support, ping hello@twv3.studio.
+		</p>
+		<div class="maintenance-actions">
+			<a class="maintenance-button" href="/" rel="noopener noreferrer">Try again</a>
+			<a class="maintenance-link" href="https://status.example.com" rel="noopener noreferrer"
+				>View status</a
+			>
+		</div>
+	</div>
+</main>

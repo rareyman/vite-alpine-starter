@@ -64,6 +64,9 @@ The smoke test does three simple things in order:
 3. Upload everything inside the configured `dist/` directory to the remote web root (via FTP, SFTP, or Bluehost’s file manager). Overwrite the target folder with the local `dist` contents.
 4. Leave `version.txt` and `commit-log-*` in place on the server for traceability; they are intentionally lightweight helpers to confirm the deployed Git identity.
 
+## Maintenance mode
+Drop an ignored runtime flag at `public/maintenance.json` when you want to gate the site. Copy the structure from [public/maintenance.example.json](public/maintenance.example.json) (just `maintenanceMode: true`) so the loader knows to show maintenance. While the flag is active the client-side boot loader replaces the body with the contents of `public/maintenance.html` (also ignored), letting you style the splash like any static page. Clearing the flag or deleting the template returns the regular experience.
+
 ## Build configuration
 `build-config.cjs` centralizes the values used by the runner and metadata scripts:
 ```cjs

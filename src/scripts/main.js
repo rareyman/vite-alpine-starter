@@ -12,6 +12,48 @@ const THEME_LOCK = {
 	enabled: false,
 	value: 'light',
 }
+const MAINTENANCE_CONFIG_URL = '/maintenance.json'
+const MAINTENANCE_HTML_URL = '/maintenance.html'
+const MAINTENANCE_BODY_CLASS = 'maintenance-body'
+
+const waitForDocumentReady = () =>
+	new Promise((resolve) => {
+		if (document.readyState !== 'loading') {
+			resolve()
+			return
+		}
+		document.addEventListener('DOMContentLoaded', () => resolve(), { once: true })
+	})
+
+const loadMaintenanceConfig = async () => {
+	try {
+		const response = await fetch(MAINTENANCE_CONFIG_URL, { cache: 'no-store' })
+		if (!response.ok) {
+			if (response.status !== 404) {
+				console.warn('Maintenance flag fetch failed', response.status)
+			}
+			return { maintenanceMode: false }
+		}
+		const payload = await response.json()
+		return { maintenanceMode: Boolean(payload.maintenanceMode) }
+	} catch (error) {
+		console.warn('Unable to load maintenance flag', error)
+		return { maintenanceMode: false }
+	}
+}
+
+const renderMaintenancePage = async () => {
+	try {
+		const response = await fetch(MAINTENANCE_HTML_URL, { cache: 'no-store' })
+		if (response.ok) {
+			return response.text()
+		}
+		console.warn('Maintenance template missing', response.status)
+	} catch (error) {
+		console.warn('Unable to load maintenance template', error)
+	}
+	return '<p>Maintenance mode enabled</p>'
+}
 
 const updateToggleLabel = (theme) => {
 	const toggleButton = document.getElementById('theme-toggle')
@@ -43,8 +85,6 @@ const getPreferredTheme = () => {
 	}
 	return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light'
 }
-
-setTheme(getPreferredTheme())
 
 const initMobileNav = () => {
 	const toggle = document.getElementById('nav-toggle')
@@ -107,24 +147,40 @@ const initAos = () => {
 	})
 }
 
-document.addEventListener('DOMContentLoaded', () => {
-	const toggleButton = document.getElementById('theme-toggle')
-	if (toggleButton) {
-		updateToggleLabel(getPreferredTheme())
-		if (THEME_LOCK.enabled) {
-			toggleButton.setAttribute('aria-disabled', 'true')
-			toggleButton.classList.add('opacity-50', 'pointer-events-none')
-			return
+const startApp = () => {
+	setTheme(getPreferredTheme())
+	document.addEventListener('DOMContentLoaded', () => {
+		const toggleButton = document.getElementById('theme-toggle')
+		if (toggleButton) {
+			updateToggleLabel(getPreferredTheme())
+			if (THEME_LOCK.enabled) {
+				toggleButton.setAttribute('aria-disabled', 'true')
+				toggleButton.classList.add('opacity-50', 'pointer-events-none')
+				return
+			}
+			toggleButton.addEventListener('click', () => {
+				const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'
+				setTheme(nextTheme)
+				localStorage.setItem(THEME_STORAGE_KEY, nextTheme)
+			})
 		}
-		toggleButton.addEventListener('click', () => {
-			const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'
-			setTheme(nextTheme)
-			localStorage.setItem(THEME_STORAGE_KEY, nextTheme)
-		})
-	}
-	initMobileNav()
-	initAos()
-})
+		initMobileNav()
+		initAos()
+	})
+	window.Alpine = Alpine
+	Alpine.start()
+}
 
-window.Alpine = Alpine
-Alpine.start()
+const bootstrapApp = async () => {
+	const maintenanceConfig = await loadMaintenanceConfig()
+	if (maintenanceConfig.maintenanceMode) {
+		await waitForDocumentReady()
+		const markup = await renderMaintenancePage()
+		document.body.className = MAINTENANCE_BODY_CLASS
+		document.body.innerHTML = markup
+		return
+	}
+	startApp()
+}
+
+bootstrapApp()

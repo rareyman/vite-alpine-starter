@@ -47,4 +47,9 @@ dist/version.txt
 # Your convention: root-only scratch
 /_*
 
+# Runtime-only maintenance flag
+public/maintenance.json
+# Runtime-only static template
+public/maintenance.html
+
 
