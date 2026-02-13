@@ -66,9 +66,9 @@ The smoke test does three simple things in order:
 4. Leave `version.txt` and `commit-log-*` in place on the server for traceability; they are intentionally lightweight helpers to confirm the deployed Git identity.
 
 ## Maintenance mode
-When the host needs a static splash, simply drop `maintenance.json` (copy [public/maintenance.example.json](public/maintenance.example.json)) and `maintenance.html` alongside the deployed `dist/` assets on the server. Vite only needs those files to exist at runtime; you do not have to rerun `npm run release` just to add them. The loader will fetch `/maintenance.json`, see `maintenanceMode: true`, and replace the SPA body with whatever `maintenance.html` contains.
+When the host needs a static splash, rename the shipped examples so the runtime sees the canonical paths: copy/rename `public/maintenance.example.json` → `maintenance.json` and `public/maintenance.example.html` → `maintenance.html` before uploading them to the same folder as your deployed `dist/` assets. Vite bundles the `.example.*` files into `dist/`, so on the server you can simply drop the renamed files next to the rest of the build without rerunning `npm run release`. The loader fetches `/maintenance.json`, sees `maintenanceMode: true`, and replaces the SPA body with whatever `maintenance.html` returns.
 
-When the maintenance period ends, delete those two files from the server (or replace them with the real site assets) so the SPA can boot normally. A new `npm run release` is only necessary if you want to export fresh assets or metadata that account for other code/content changes.
+When the maintenance period ends, delete or rename the files back to `maintenance.example.json`/`maintenance.example.html` so the SPA boot path runs again. Redeploying a fresh `dist/` also restores the `.example.*` files if you’d prefer to overwrite everything with a new build. A new `npm run release` is only necessary if you want to export fresh assets or metadata that account for other code/content changes.
 
 > After you delete the maintenance files but before you rebuild the `dist/` used for preview, running `npm run preview` may log `Maintenance flag not JSON text/html` because the SPA fallback rewrites `/maintenance.json` to `index.html`; that warning is harmless and vanishes once you rebuild without the ignored flag.
 

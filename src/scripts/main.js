@@ -147,26 +147,25 @@ const initAos = () => {
 	})
 }
 
-const startApp = () => {
+const startApp = async () => {
 	setTheme(getPreferredTheme())
-	document.addEventListener('DOMContentLoaded', () => {
-		const toggleButton = document.getElementById('theme-toggle')
-		if (toggleButton) {
-			updateToggleLabel(getPreferredTheme())
-			if (THEME_LOCK.enabled) {
-				toggleButton.setAttribute('aria-disabled', 'true')
-				toggleButton.classList.add('opacity-50', 'pointer-events-none')
-				return
-			}
+	await waitForDocumentReady()
+	const toggleButton = document.getElementById('theme-toggle')
+	if (toggleButton) {
+		updateToggleLabel(getPreferredTheme())
+		if (THEME_LOCK.enabled) {
+			toggleButton.setAttribute('aria-disabled', 'true')
+			toggleButton.classList.add('opacity-50', 'pointer-events-none')
+		} else {
 			toggleButton.addEventListener('click', () => {
 				const nextTheme = document.documentElement.classList.contains('dark') ? 'light' : 'dark'
 				setTheme(nextTheme)
 				localStorage.setItem(THEME_STORAGE_KEY, nextTheme)
 			})
 		}
-		initMobileNav()
-		initAos()
-	})
+	}
+	initMobileNav()
+	initAos()
 	window.Alpine = Alpine
 	Alpine.start()
 }
@@ -180,7 +179,7 @@ const bootstrapApp = async () => {
 		document.body.innerHTML = markup
 		return
 	}
-	startApp()
+	await startApp()
 }
 
 bootstrapApp()

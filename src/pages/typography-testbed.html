@@ -13,59 +13,65 @@
 		<script type="module" src="/src/scripts/main.js"></script>
 	</head>
 
-	<body class="bg-gray-300">
+	<body
+		class="bg-slate-100 text-slate-900 transition-colors duration-300 dark:bg-slate-950 dark:text-slate-50">
 		<!-- <div class="flex h-screen w-screen items-center justify-center bg-gray-100">
 			<div class="-mt-8 mb-5 rounded border border-gray-300 p-10 px-8 py-4 shadow-xl">
 				<h1>Hello world!</h1>
 			</div>
 		</div> -->
 
-		<div class="mx-auto mt-8 w-2/3 rounded-lg border bg-gray-200 p-8">
+		<div
+			class="mx-auto mt-8 w-11/12 max-w-3xl rounded-2xl border border-slate-200/80 bg-white/90 p-8 shadow-lg shadow-slate-200/40 backdrop-blur dark:border-white/10 dark:bg-slate-900/60 dark:shadow-indigo-900/30">
 			<header>
-				<h1 class="text-2xl font-bold">Main Heading (h1)</h1>
-				<h2 class="mt-micro text-xl font-bold">Subheading (h2)</h2>
+				<h1 class="text-3xl font-semibold text-slate-900 dark:text-slate-100">Main Heading (h1)</h1>
+				<h2 class="mt-micro text-2xl font-semibold text-slate-700 dark:text-slate-200">
+					Subheading (h2)
+				</h2>
 			</header>
 
-			<section class="">
+			<section class="space-y-5">
 				<h3 class="mt-medium text-lg font-bold">Section Heading (h3)</h3>
-				<p class="-mx-4 mt-small rounded-lg bg-gray-300 px-4 py-2 text-lg">
+				<p
+					class="-mx-4 mt-small rounded-lg bg-slate-200 px-4 py-2 text-lg text-slate-800 dark:bg-slate-700 dark:text-slate-100">
 					This is a hero paragraph (p). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 					Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
 				</p>
-				<p class="mt-small">
+				<p class="mt-small text-sm text-slate-700 dark:text-slate-300">
 					This is paragraph one (p). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 					Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
 				</p>
-				<p class="mt-tiny">
+				<p class="mt-tiny text-sm text-slate-700 dark:text-slate-300">
 					This is paragraph two (p). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 					Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
 				</p>
-				<p class="mt-tiny">
+				<p class="mt-tiny text-sm text-slate-700 dark:text-slate-300">
 					This is paragraph three (p). Lorem ipsum dolor sit amet, consectetur adipiscing elit.
 					Integer nec odio. Praesent libero. Sed cursus ante dapibus diam.
 				</p>
-				<p class="mt-tiny">
+				<p class="mt-tiny text-sm text-slate-700 dark:text-slate-300">
 					<strong>Bold text</strong> and <em>italic text</em> within a paragraph.
 				</p>
 				<blockquote
-					class="-ml-4 mt-medium border-l-4 border-indigo-500 bg-indigo-50 py-2 pl-3 drop-shadow-sm">
+					class="-ml-4 mt-medium border-l-4 border-indigo-500 bg-indigo-50 px-3 py-2 text-sm leading-relaxed backdrop-blur transition-colors duration-300 dark:border-indigo-300/60 dark:bg-slate-900/80 dark:text-slate-100">
 					<p>This is a blockquote. Lorem ipsum dolor sit amet, consectetur adipiscing elit.</p>
 				</blockquote>
-				<ul class="mt-medium">
+				<ul class="mt-medium space-y-1 text-sm text-slate-700 dark:text-slate-300">
 					<li class="mt-tiny">Unordered list item 1</li>
 					<li class="mt-tiny">Unordered list item 2</li>
 					<li class="mt-tiny">Unordered list item 3</li>
 				</ul>
-				<ol class="mt-medium">
+				<ol
+					class="mt-medium list-decimal space-y-1 pl-5 text-sm text-slate-700 dark:text-slate-300">
 					<li class="mt-tiny">Ordered list item 1</li>
 					<li class="mt-tiny">Ordered list item 2</li>
 					<li class="mt-tiny">Ordered list item 3</li>
 				</ol>
-				<pre class="mt-medium rounded-lg bg-gray-800 px-4 text-gray-400">
+				<pre class="mt-medium rounded-lg bg-slate-900 px-4 py-3 text-slate-100 dark:bg-slate-900">
 					<code>
 // This is a code block
 function helloWorld() {
-					console.log("Hello, world!");
+						console.log("Hello, world!");
 }
 </code>
 					</pre>
